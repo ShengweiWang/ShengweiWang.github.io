@@ -1,0 +1,96 @@
+---
+layout: post
+title: Maven-SpringMVC-Tomcat
+---
+
+1. Maven in eclipse
+
+2. Add SpringMVC dependency in maven
+
+3. Tomcat setting :
+
+/Library/tomcat/bin/
+
+#permission
+chmod +x catalina.sh
+chmod +x startup.sh
+chmod +x shutdown.sh
+
+./startup.sh
+./shutdown
+
+add to tomcat_user.xml
+<role rolename="tomcat"/>
+<role rolename="role1"/>
+<role rolename="manager-script"/>
+<role rolename="manager-gui"/>
+<role rolename="manager-status"/> 
+<role rolename="admin-gui"/>
+<role rolename="admin-script"/> 
+<user username="tomcat" password="tomcat" roles="manager-gui,manager-script,tomcat,admin-gui,admin-script"/>
+
+make a copy in
+/Applications/tomcat_jenkins/bin
+for testing
+./startup.sh --httpPort=8060
+
+
+4. Jenkins
+download jenkins.war
+java -jar jenkins.war --httpPort=8000
+using accound shengwei / 8***** login
+
+refer http://www.liaoxuefeng.com/article/001463233913442cdb2d1bd1b1b42e3b0b29eb1ba736c5e000
+
+add a maven project
+git repository setting
+
+plugin download : deploy to containers plugin
+
+5. Debug
+in eclipse, run as Run in Server
+choose Tomcat
+if tomcat9, using java SE8
+
+6. Mysql
+
+install mysql
+commandline : mysql.server start
+mysql -u root
+show databases;
+use XXX;
+show tables;
+SELECT User FROM mysql.user
+CREATE USER 'stockmonitor'@'localhost' IDENTIFIED BY 'test’;
+GRANT ALL PRIVILEGES ON * . * TO 'stockmonitor'@'localhost';
+
+7. Spring-jdbc:
+
+add dependency
+set xml to inidicate beans
+in test file, set Application Content something
+
+8.google app engine
+download jdk
+pom add dependency
+pom add plugins (not in pluginmanagement)
+mvn appengine:devserver
+
+to use spring : add many dependency in spring
+
+IMPORTANT : google app engine is pretty silly, (compare to tomcat,) we have to take care of many detailed settings
+
+
+9.hibernate
+
+add dependency
+set xml
+
+#wrong!!
+#add javassist.jar manually : create a folder lib, put it inside, java build path add
+#conflicts : default pow use javassist first, and it didn't copy it to web/lib
+
+delete everything inside user/.m2
+refresh project, and then mvn clean install
+
+
